@@ -19,11 +19,11 @@ CATEGORIES = ["freshapple", "freshbanana", "freshorange",
               "rottenapple", "rottenbanana", "rottenorange"]
 
 
-load_env() # This will be removed for the GCP deployment
+load_env('/workspaces/fruit-classifier-mlops-class/app/.env') # This will be removed for the GCP deployment
 wandb_api_key = os.environ.get('WANDB_API_KEY')
 
-MODELS_DIR = '../models'
-MODEL_FILE_NAME = 'best_model.pth' # Take note that in other examples we called this model.pth
+#MODELS_DIR = '../models'
+#MODEL_FILE_NAME = 'best_model.pth' # Take note that in other examples we called this model.pth
 
 os.makedirs(MODELS_DIR, exist_ok=True)
 
