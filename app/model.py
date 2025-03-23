@@ -11,8 +11,6 @@ from torchvision.transforms import v2 as transforms
 #todo: remember to delete the use of the 
 # loadotenv and os.getenv entries 
 # when we use the Docker image later
-#from loadotenv import load_env
-
 
 MODELS_DIR = 'models'
 MODEL_FILE_NAME = 'best_model.pth'
@@ -21,10 +19,10 @@ CATEGORIES = ["freshapple", "freshbanana", "freshorange",
               "rottenapple", "rottenbanana", "rottenorange"]
 
 
-#load_env() # This will be removed for the GCP deployment
+load_env() # This will be removed for the GCP deployment
 wandb_api_key = os.environ.get('WANDB_API_KEY')
 
-MODELS_DIR = 'models'
+MODELS_DIR = '../models'
 MODEL_FILE_NAME = 'best_model.pth' # Take note that in other examples we called this model.pth
 
 os.makedirs(MODELS_DIR, exist_ok=True)
@@ -39,9 +37,13 @@ def download_artifact():
 
     artifact_path = f"{wandb_org}/{wandb_project}/{wandb_model_name}:{wandb_model_version}"
 
-    wandb.login(key=wandb_api_key)
+    wandb.login()
+    print(f"Downloading artifact {artifact_path} to {MODELS_DIR}")
     artifact = wandb.Api().artifact(artifact_path, type='model')
     artifact.download(root=MODELS_DIR)
+
+
+
 
 def get_raw_model() -> ResNet:
     """Here we create a model with the same architecture as the one that we have on Kaggle, but without any weights"""
